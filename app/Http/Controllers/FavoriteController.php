@@ -14,7 +14,7 @@ class FavoriteController extends Controller
     public function favoriteProducts()
     {
         // dd(Auth::user());
-        $favorites = User::with('products')->find(Auth::user()->id)->get();
+        $favorites = User::with('products')->where('id',Auth::user()->id)->get();
         return new JsonResponse(['data'=> FavoriteResource::collection($favorites)]);
     }
 }
