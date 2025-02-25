@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Image extends Model
 {
@@ -11,4 +12,9 @@ class Image extends Model
         'imageble_id',
         'url'
     ];
+
+    public function imageble(): MorphTo
+    {
+        return $this->morphTo();
+    }
 }
