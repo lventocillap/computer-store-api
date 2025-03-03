@@ -18,7 +18,9 @@ class Product extends Model
         'manufacturer_information_url',
         'description',
         'price',
-        'category_id'
+        'url',
+        'category_id',
+
     ];
     public function category(): BelongsTo
     {

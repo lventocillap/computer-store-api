@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Enums\ImageProductEnum;
+use App\Enums\ProductEnum;
 use App\Models\Image;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Product;
 use Illuminate\Database\Seeder;
 
 class ImageProductSeeder extends Seeder
@@ -14,11 +14,11 @@ class ImageProductSeeder extends Seeder
      */
     public function run(): void
     {
-        foreach(ImageProductEnum::cases() as $product){
+        foreach(ProductEnum::cases() as $product){
             Image::create([
-                'imageble_type' => $product->type(),
-                'imageble_id' => $product->id(),
-                'url' => $product->value
+                'imageble_type' => Product::class,
+                'imageble_id' => 2,
+                'url' => $product->imgageUrl()
             ]);
         }
     }

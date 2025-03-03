@@ -12,8 +12,8 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::get('/category/product/{idCategory}',[ProductController::class, 'getCategoryProducts'])->withoutMiddleware([Authentication::class]);
-Route::get('/product/{idProduct}',[ProductController::class, 'getProductId']);
+Route::get('/category/product/',[ProductController::class, 'getCategoryProducts'])->withoutMiddleware([Authentication::class]);
+Route::get('/product/{idProduct}',[ProductController::class, 'getProductId'])->withoutMiddleware([Authentication::class]);
 Route::get('/favorite/product',[FavoriteController::class, 'favoriteProducts']);
 Route::get('/promotion',[PromotionController::class, 'getPromotions'])->withoutMiddleware([Authentication::class]);
 

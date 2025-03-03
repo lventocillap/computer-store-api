@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 
 use App\Http\Resources\ProductCategoryResource;
 use App\Http\Resources\ProductResource;
+use App\Http\utils\QueryParams;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\JsonResponse;
@@ -15,12 +16,14 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function getCategoryProducts(string $idCategory): JsonResponse
+    use QueryParams;
+    public function getCategoryProducts(): JsonResponse
     {
-        if(!Category::find($idCategory)){
+        $category = $this->param('category');
+        if(!Category::where('name',$category)->exists()){
             throw new NotFoundCategory;
         }
-        $products = Category::with('product.image')->where('id', $idCategory)->get();
+        $products = Category::with('product')->where('name', $category)->get();
         return new JsonResponse(['data' => ProductCategoryResource::collection($products)]);
     }
     public function getProductId(int $productId): JsonResponse

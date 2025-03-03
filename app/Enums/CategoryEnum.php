@@ -16,5 +16,4 @@ enum CategoryEnum: string
     case CATEGORY_010 = 'teclado';
     case CATEGORY_011 = 'mouse';
     case CATEGORY_012 = 'audifono';
-
 }

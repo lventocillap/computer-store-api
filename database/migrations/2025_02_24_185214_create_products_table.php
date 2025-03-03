@@ -18,8 +18,9 @@ return new class extends Migration
             $table->string('status');
             $table->integer('stock');
             $table->string('manufacturer_information_url');
-            $table->string('description');
+            $table->text('description');
             $table->decimal('price');
+            // $table->string('url');
             $table->foreignId('category_id')->constrained('categories');
             $table->timestamps();
         });
