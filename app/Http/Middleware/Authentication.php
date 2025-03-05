@@ -20,7 +20,7 @@ class Authentication
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $token = $request->cookie('auth');
+        $token = $request->header('Authorization');
         if(!$token){
             throw new TokenNotFound;
         }

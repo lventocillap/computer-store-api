@@ -29,13 +29,22 @@ class AuthController extends Controller
             throw new CredentialInvalid;
         }
         $token = $user->createToken('auth_token')->plainTextToken;
-        $cookie = Cookie::make('auth', $token, 60);
-        return response()->json(['data' => 'Authenticable'])->withCookie($cookie);
+        //$cookie = Cookie::make('auth', $token, 60);
+        return response()->json(['token' => $token]);
+    }
+    public function verification(): bool
+    {
+        return true;
+    }
+    public function getUser(): JsonResponse
+    {
+        $user = User::find(Auth::user()->id);
+        return new JsonResponse(['data' => $user]);
     }
 
     public function logout(Request $request)
     {
-        $token = $request->cookie('auth');
+        $token = $request->header('Authorization');
         PersonalAccessToken::findToken($token)->delete();
         return new JsonResponse(['data' => 'logout']);
     }
