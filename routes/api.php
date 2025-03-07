@@ -17,6 +17,7 @@ Route::get('/user', function (Request $request) {
 Route::get('/category/product/',[ProductController::class, 'getCategoryProducts'])->withoutMiddleware([Authentication::class]);
 Route::get('/product/{idProduct}',[ProductController::class, 'getProductId'])->withoutMiddleware([Authentication::class]);
 Route::get('/promotion',[PromotionController::class, 'getPromotions'])->withoutMiddleware([Authentication::class]);
+Route::post('/register/user',[AuthController::class, 'register'])->withoutMiddleware([Authentication::class]);
 Route::get('/favorite/product',[FavoriteController::class, 'favoriteProducts']);
 
 Route::post('/login',[AuthController::class, 'login'])->withoutMiddleware([Authentication::class]);

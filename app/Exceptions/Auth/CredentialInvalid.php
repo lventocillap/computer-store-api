@@ -9,6 +9,6 @@ class CredentialInvalid extends BaseException
 {
     public function __construct()
     {
-        parent::__construct("Category not found", 404);
+        parent::__construct("Credentials invalid", 404);
     }
 }
