@@ -49,7 +49,7 @@
         <p><strong>DNI:</strong>{{ $user->profile->dni}}</p>
         <p><strong>Cellphone:</strong>{{ $user->profile->cellphone}}</p>
         <p><strong>Dirección:</strong> {{ $user->profile->direcction }}</p>
-        <p><strong>Fecha del Reporte:</strong> {{ date('d/m/Y') }}</p>
+        <p><strong>Fecha del Venta:</strong> {{ date('d/m/Y') }}</p>
     </header>
 
     <table>

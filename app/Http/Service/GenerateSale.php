@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Service;
 
+use App\Exceptions\Product\NotListProductWish;
 use App\Models\DetailSale;
 use App\Models\Product;
 use App\Models\Sale;
@@ -22,6 +23,9 @@ trait GenerateSale
         foreach ($data['product_id'] as $productId) {
             $product = Product::find($productId);
             $total += $product->price * $data['product_count'][$productId];
+        }
+        if($total === 0){
+            throw new NotListProductWish;
         }
         $saleId = Sale::create([
             'user_id' => Auth::id(),
