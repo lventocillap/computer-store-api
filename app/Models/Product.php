@@ -35,8 +35,8 @@ class Product extends Model
     {
         return $this->morphOne(Image::class, 'imageble');
     }
-    public function wishlist(): HasMany
+    public function wishlist(): BelongsToMany
     {
-        return $this->hasMany(Wishlist::class, 'product_id');
+        return $this->belongsToMany(User::class, 'wishlists');
     }
 }

@@ -1,36 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+declare(strict_types=1);
 
-use App\Exceptions\Product\LimitedStock;
-use App\Http\Controllers\Controller;
-use App\Http\Service\ServiceDuplicate;
-use App\Models\DetailSale;
+namespace App\Http\Service;
+
 use App\Models\Product;
-use App\Models\Sale;
 use App\Models\Wishlist;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class SaleController extends Controller
+trait ServiceListWish
 {
-    use ServiceDuplicate;
-    public function storeWishlist(int $idProduct): JsonResponse
-    {
-        $productsRelashion = Wishlist::with('product.image')->where('product_id', $idProduct)->where('user_id', Auth::user()->id)->count();
-        $productStock = Product::find($idProduct)->stock;
-        if ($productsRelashion >= $productStock) {
-            throw new LimitedStock;
-        }
-        Wishlist::create([
-            'user_id' => Auth::user()->id,
-            'product_id' => $idProduct
-        ]);
-        return new JsonResponse(['data' => 'register wishlist']);
-    }
-
-    public function listWishlist(): JsonResponse
+    public function listWish(): array
     {
         $wishlist = Wishlist::with('product.image') // Cargar la relación polimórfica de imagen
             ->where('user_id', Auth::id())
@@ -87,45 +67,9 @@ class SaleController extends Controller
 
         // Calcular el monto total de todos los productos duplicados
         $totalAmount = $duplicatedProductsInfo->sum('total_price');
-
-        // Retornar la información de los productos duplicados y el monto total
-        return new JsonResponse([
+        return [
             'duplicated_products' => $duplicatedProductsInfo->values()->toArray(),
-            'total_amount' => round($totalAmount, 2) // Monto total de todos los productos duplicados
-        ]);
-    }
-
-    public function saleGenerate()
-    {
-        $data = $this->duplicateIdProduct();
-
-        $total = 0;
-        foreach ($data['product_id'] as $productId) {
-            $product = Product::find($productId);
-            $total += $product->price * $data['product_count'][$productId];
-        }
-
-        $saleId = Sale::create([
-            'user_id' => Auth::id(),
-            'amount' => $total,
-            'date' => now()
-        ]);
-        
-        foreach ($data['product_id'] as $productId) {
-            $product = Product::find($productId);
-            
-            DetailSale::create([
-                'product_id' => $productId,
-                'sale_id' => $saleId->id,
-                'price' => $product->price
-            ]);
-            
-            if ($product) {
-                $product->update([
-                    'stock' => $product->stock - $data['product_count'][$productId] // Accede usando la clave correcta
-                ]);
-            }
-        }
-        return new JsonResponse(['data' => 'register']);
+            'total_amount' => round($totalAmount, 2)
+        ];
     }
 }

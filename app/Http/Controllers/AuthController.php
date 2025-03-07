@@ -38,7 +38,7 @@ class AuthController extends Controller
     }
     public function getUser(): JsonResponse
     {
-        $user = User::find(Auth::user()->id);
+        $user = User::with('profile')->where('id', Auth::user()->id)->first();
         return new JsonResponse(['data' => $user]);
     }
 

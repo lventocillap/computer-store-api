@@ -9,7 +9,7 @@ class Sale extends Model
 {
     protected $fillable = [
         'user_id',
-        'amount',
+        'price_total',
         'date',
     ];
     public function user(): BelongsTo

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\PDFController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\SaleController;
@@ -25,3 +26,5 @@ Route::get('/user',[AuthController::class, 'getUser']);
 
 Route::post('/wishlist/{idProduct}', [SaleController::class, 'storeWishlist']);
 Route::get('/wishlist', [SaleController::class, 'listWishlist']);
+
+Route::post('/sale',[PDFController::class, 'generatePDF']);

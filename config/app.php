@@ -122,5 +122,10 @@ return [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
+    'aliases' => [
+        'Storage' => Illuminate\Support\Facades\Storage::class,
+        'File' => Illuminate\Support\Facades\File::class, // Asegúrate de agregar esta línea
+        'PDF' => Barryvdh\DomPDF\Facade\Pdf::class,
+    ],
 
 ];

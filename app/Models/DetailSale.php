@@ -11,6 +11,7 @@ class DetailSale extends Model
         'product_id',
         'sale_id',
         'price',
+        'amount'
     ];
     public function product(): BelongsTo
     {
